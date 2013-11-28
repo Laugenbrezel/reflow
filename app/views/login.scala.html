@@ -1,0 +1,61 @@
+@(loginForm: Form[Application.Login]) 
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>reFlow - Please sign in</title>
+
+<link rel='shortcut icon' type='image/png'
+   href='@routes.Assets.at("images/favicon.png")'
+>
+<link rel='stylesheet'
+   href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'
+>
+<link rel='stylesheet' href='@routes.Assets.at("stylesheets/login.css")'>
+
+<script type='text/javascript'
+   src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'
+></script>
+<link rel='stylesheet'
+   href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'
+>
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+   <div class="container">
+      @helper.form(routes.Application.authenticate, 'class -> "form-signin") {
+        <h2 class="form-signin-heading">Please sign in</h2>
+        @if(loginForm.hasGlobalErrors) {
+             <p class="text-danger">
+                 @loginForm.globalError.message
+             </p>
+         }
+         @if(flash.contains("success")) {
+             <p class="text-success">
+                 @flash.get("success")
+             </p>
+         }
+        <input type="text" name="username" class="form-control" placeholder="Username" required autofocus 
+            value="@loginForm("username").value">
+        <input type="password" name="password"  class="form-control" placeholder="Password" required>
+        <!--  
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+        -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      }
+   </div>
+</body>
+</html>

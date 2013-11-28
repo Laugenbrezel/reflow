@@ -1,0 +1,12 @@
+- !!models.User
+    username:   admin
+    password:   admin
+
+- !!models.User
+    username:   bisasam
+    password:   bisabisa
+
+- !!models.Requirement
+    id:     -1
+    text:   Hallo Elke!
+    creator: bisasam
