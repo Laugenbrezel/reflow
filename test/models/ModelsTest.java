@@ -39,11 +39,13 @@ public class ModelsTest extends WithApplication {
 
 	@Test
 	public void findRequirementsInvolving() {
-		new User("bob", "secret").save();
-		new User("jane", "secret").save();
+		User user1 = new User("bob", "secret");
+		user1.save();
+		User user2 = new User("jane", "secret");
+		user2.save();
 
-		Requirement.create("Play 2", "bob");
-		Requirement.create("Play 1", "jane");
+		Requirement.create("P2", "Play 2", user1);
+		Requirement.create("P1", "Play 1", user2);
 
 		List<Requirement> results = Requirement.findInvolving("bob");
 		assertEquals(1, results.size());

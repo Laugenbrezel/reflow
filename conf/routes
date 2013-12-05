@@ -17,5 +17,15 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /webjars/*file              controllers.WebJarAssets.at(file)
 
 # Requirements
-GET      /requirements              controllers.RequirementController.list()
+GET     /requirements               controllers.Requirements.list()
+GET     /requirements/new           controllers.Requirements.newRequirement()
+POST    /requirements               controllers.Requirements.add()
+GET     /requirements/:id           controllers.Requirements.load(id: Long)
+POST    /requirements/:id           controllers.Requirements.update(id: Long)
+POST    /requirements/:id/delete    controllers.Requirements.delete(id: Long)
+POST    /requirements/:id/like      controllers.Requirements.like(id: Long)
+POST    /requirements/:id/unlike    controllers.Requirements.unlike(id: Long)
 
+# Ideas
+GET     /ideas               controllers.Ideas.list()
+POST    /ideas               controllers.Ideas.add()

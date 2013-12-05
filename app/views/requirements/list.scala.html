@@ -1,0 +1,75 @@
+@(requirements: java.util.List[Requirement]) 
+
+@main("Requirements","requirement") {      
+   <a href="/requirements/new" class="btn btn-primary" role="button">Create new</a>
+   
+<table class="table table-striped">
+   <thead>
+      <tr>
+         <th>#</th>
+         <th>Text</th>
+         <th>Created by</th>
+         <th>Likes</th>
+         <th></th>
+         <th></th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+      @requirements.map { requirement =>
+      <tr>
+         <td>@requirement.id</td>
+         <td>
+            @requirement.title
+         </td>
+         <td>@requirement.creator.username</td>
+         <td>@requirement.likes.size</td>
+         <td>
+            @modal("requirementModal"+requirement.id,requirement.title,"Show") {
+               <textarea class="form-control" rows="7" disabled="disabled">@requirement.text</textarea>
+               <small>by @requirement.creator.username</small>
+            }
+            <a class="btn btn-primary btn-xs" href="@routes.Requirements.load(requirement.id)">Update</a>
+         </td>
+         <td>
+            @if(!requirement.likedBy(SideMenu.current().user)) {
+               @helper.form(routes.Requirements.like(requirement.id)) {
+                    <button type="submit" class="btn btn-primary btn-xs">
+                     <span class="glyphicon glyphicon-thumbs-up"></span> like
+                    </button>
+                }
+             } else {
+                @helper.form(routes.Requirements.unlike(requirement.id)) {
+                    <button type="submit" class="btn btn-primary btn-xs">
+                     <span class="glyphicon glyphicon-thumbs-down"></span> un-like
+                    </button>
+                }
+             }
+         </td>
+         <td>
+            @helper.form(routes.Requirements.delete(requirement.id)) {
+                 <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
+             }
+         <!--  
+            <a onclick="del('@routes.Requirements.delete(requirement.id)')">
+            <span class="glyphicon glyphicon-trash"/></a>
+         -->
+         </td>
+      </tr>
+      }
+   </tbody>
+</table>
+
+<script type="text/javascript">
+function del(urlToDelete) {
+   $.ajax({
+     url: urlToDelete,
+     type: 'DELETE',
+     success: function(results) {
+       // Refresh the page
+       location.reload();
+     }
+}); }
+</script>
+
+}

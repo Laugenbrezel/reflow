@@ -12,18 +12,23 @@
 
 <link rel='shortcut icon' type='image/png'
    href='@routes.Assets.at("images/favicon.png")'
+/>
+
+<link rel='stylesheet'
+   href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'
 >
 <link rel='stylesheet'
-   href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.css"))'
+   href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap-theme.min.css"))'
 >
-<link rel='stylesheet' href='@routes.Assets.at("stylesheets/main.css")'>
+
+<link rel='stylesheet' href='@routes.Assets.at("stylesheets/main.css")' />
 
 <script type='text/javascript'
-   src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'
-></script>
-<link rel='stylesheet'
-   href='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'
->
+   src='@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))'></script>
+<script type='text/javascript'
+   src='@routes.WebJarAssets.at(WebJarAssets.locate("bootstrap.min.js"))'></script>
+<script type='text/javascript' src='@routes.Assets.at("javascripts/main.min.js")'></script>
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,23 +41,56 @@
    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
          <div class="navbar-header">
-            <a class="navbar-brand" href="#">reFlow name</a>
+            <a class="navbar-brand" href="#">reFlow</a>
          </div>
          <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                <li class="@if(menu == "home") { active }"><a
-                  href="/"
-               >Home</a></li>
+                  href="/">
+               <span class="glyphicon glyphicon-home"></span> </a></li>
+               <li class="@if(menu == "ideas") { active }"><a
+                  href="/ideas">Ideas</a></li>
                <li class="@if(menu == "requirement") { active }"><a
-                  href="/requirements"
-               >Requirements</a></li>
-            </ul>   
+                  href="/requirements">Requirements</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
                <li><a href="@routes.Application.logout()">Logout</a></li>
-             </ul>         
-         </div>         
+            </ul>
+         </div>
       </div>
    </div>
-   <div class="container">@content</div>
+   <div class="container">
+      <div class="row row-offcanvas row-offcanvas-right">
+
+         <div class="col-xs-12 col-sm-9">@content</div>
+         <!--/span-->
+
+         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+            @if(flash.contains("success")) {
+            <div class="alert alert-success fade in">
+               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+               @flash.get("success")</div>
+            } @if(flash.contains("info")) {
+            <div class="alert alert-info fade in">
+               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+               @flash.get("info")</div>
+            }
+            <div class="jumbotron">
+               <h2>Hello, @SideMenu.current().user.username</h2>
+               <br />
+               <p>
+               You are currently working on @SideMenu.current().countMyRequirements Requirements.
+               </p> 
+               <p>
+                  <img
+                     src='@routes.Assets.at("images/Calvin-and-Hobbes.png")'
+                  />
+               </p>
+
+            </div>
+            <!--/span-->
+         </div>
+      </div>
+      
 </body>
 </html>

@@ -1,0 +1,29 @@
+@(ideaForm: Form[Idea], ideas: java.util.List[Idea]) 
+
+@main("Ideas","ideas") {      
+
+   @helper.form(routes.Ideas.add(), 'role -> "form", 'class -> "form-inline") {
+       <input type="text" class="form-control" id="text" name="text" placeholder="Idea goes here..." 
+            value="@ideaForm("text").value">
+   }
+   
+<table class="table table-striped">
+   <thead>
+      <tr>
+         <th>#</th>
+         <th>Text</th>
+         <th>Created by</th>
+      </tr>
+   </thead>
+   <tbody>
+      @ideas.map { idea =>
+      <tr>
+         <td>@idea.id</td>
+         <td>@idea.text</td>
+         <td>@idea.creator.username</td>
+      </tr>
+      }
+   </tbody>
+</table>
+
+}
