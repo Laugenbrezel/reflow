@@ -2,28 +2,21 @@
 
 @main("Ideas","ideas") {      
 
-   @helper.form(routes.Ideas.add(), 'role -> "form", 'class -> "form-inline") {
-       <input type="text" class="form-control" id="text" name="text" placeholder="Idea goes here..." 
-            value="@ideaForm("text").value">
-   }
-   
-<table class="table table-striped">
-   <thead>
-      <tr>
-         <th>#</th>
-         <th>Text</th>
-         <th>Created by</th>
-      </tr>
-   </thead>
-   <tbody>
-      @ideas.map { idea =>
-      <tr>
-         <td>@idea.id</td>
-         <td>@idea.text</td>
-         <td>@idea.creator.username</td>
-      </tr>
+   <div class="well">
+      @helper.form(routes.Ideas.add(), 'role -> "form", 'class -> "form-inline") {
+          <input type="text" class="form-control" id="text" name="text" placeholder="Idea goes here..." 
+               value="@ideaForm("text").value">
       }
-   </tbody>
-</table>
-
+   </div>
+   
+   @ideas.map { idea =>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">@idea.id <em>by @idea.creator.username</em></h3>
+        </div>
+        <div class="panel-body">
+          @idea.text
+        </div>
+      </div>
+   }
 }
