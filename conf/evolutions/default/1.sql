@@ -7,6 +7,8 @@ create table idea (
   id                        bigint not null,
   text                      varchar(255),
   creator_username          varchar(255) not null,
+  status                    varchar(11),
+  constraint ck_idea_status check (status in ('CREATED','UP_FOR_VOTE','DECLINED','ACCEPTED','PULLED')),
   constraint pk_idea primary key (id))
 ;
 
@@ -34,6 +36,12 @@ create table user (
 ;
 
 
+create table idea_user (
+  idea_id                        bigint not null,
+  user_username                  varchar(255) not null,
+  constraint pk_idea_user primary key (idea_id, user_username))
+;
+
 create table requirement_user (
   requirement_id                 bigint not null,
   user_username                  varchar(255) not null,
@@ -58,6 +66,10 @@ create index ix_requirement_creator_4 on requirement (creator_username);
 
 
 
+alter table idea_user add constraint fk_idea_user_idea_01 foreign key (idea_id) references idea (id) on delete restrict on update restrict;
+
+alter table idea_user add constraint fk_idea_user_user_02 foreign key (user_username) references user (username) on delete restrict on update restrict;
+
 alter table requirement_user add constraint fk_requirement_user_requireme_01 foreign key (requirement_id) references requirement (id) on delete restrict on update restrict;
 
 alter table requirement_user add constraint fk_requirement_user_user_02 foreign key (user_username) references user (username) on delete restrict on update restrict;
@@ -67,6 +79,8 @@ alter table requirement_user add constraint fk_requirement_user_user_02 foreign 
 SET REFERENTIAL_INTEGRITY FALSE;
 
 drop table if exists idea;
+
+drop table if exists idea_user;
 
 drop table if exists note;
 
