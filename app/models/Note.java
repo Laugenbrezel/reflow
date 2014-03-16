@@ -1,29 +1,50 @@
 package models;
 
-import java.util.*;
-import javax.persistence.*;
-import play.db.ebean.*;
+import java.util.Date;
 
-@Entity
-public class Note extends Model {
+import org.ektorp.support.CouchDbDocument;
+
+public class Note extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	public Long id;
 	public String text;
 	public Date createDate;
-	@ManyToOne
-	public User assignedTo;
-	@ManyToOne
-	public Requirement requirement;
 
-	public static Model.Finder<Long, Note> find = new Model.Finder(Long.class,
-			Note.class);
+	public String assignedToId;
 
-	public static Note create(Note note, Long requirement) {
-		note.requirement = Requirement.find.ref(requirement);
-		note.save();
-		return note;
+	public String requirementId;
+
+	public String getText() {
+		return text;
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getAssignedToId() {
+		return assignedToId;
+	}
+
+	public void setAssignedToId(String assignedToId) {
+		this.assignedToId = assignedToId;
+	}
+
+	public String getRequirementId() {
+		return requirementId;
+	}
+
+	public void setRequirementId(String requirementId) {
+		this.requirementId = requirementId;
+	}
+
 }

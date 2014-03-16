@@ -15,6 +15,11 @@ public class SideMenuItem implements Serializable {
 	public SideMenuItem(User user) {
 		this.user = user;
 		// TODO implement
-		this.countMyRequirements = Requirement.findCreatedBy(user).size();
+		this.countMyRequirements = getRequirementRepository().findByCreator(
+				user).size();
+	}
+
+	private static RequirementRepository getRequirementRepository() {
+		return new RequirementRepository(EktorpDb.getDb());
 	}
 }

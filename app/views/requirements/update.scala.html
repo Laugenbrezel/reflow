@@ -1,7 +1,9 @@
-@(id: Long, requirementForm: Form[Requirement])
+@(requirementForm: Form[Requirement])
 
 @main("Requirements","requirement") {
-   @helper.form(routes.Requirements.update(id), 'role -> "form") {
+   @helper.form(routes.Requirements.update(), 'role -> "form") {
+         <input type="hidden" name="id" value='@requirementForm("id").value' >
+         <input type="hidden" name="revision" value='@requirementForm("revision").value' > 
          @text(requirementForm("title"), "Title")
          @textarea(requirementForm("text"), "7", "Text")
          <input type="submit" class="btn btn-primary" />

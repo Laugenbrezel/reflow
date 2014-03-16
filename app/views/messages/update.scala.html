@@ -1,0 +1,12 @@
+@(messageForm: Form[Message])
+
+@main("Messages","message") {
+   @helper.form(routes.Messages.update(), 'role -> "form") {
+   
+         <input type="hidden" name="id" value='@messageForm("id").value' >
+         <input type="hidden" name="revision" value='@messageForm("revision").value' >   
+         @textarea(messageForm("text"), "7", "Text")
+         <input type="submit" class="btn btn-primary" />
+         <a class="btn btn-default" href="@routes.Messages.list()">Cancel</a>
+   }
+}

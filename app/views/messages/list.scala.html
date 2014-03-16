@@ -1,0 +1,32 @@
+@(messages: java.util.List[Message]) 
+
+@main("Messages","message") {      
+   <a href="/messages/new" class="btn btn-primary" role="button">Create new</a>
+   
+<table class="table table-striped">
+   <thead>
+      <tr>
+         <th>#</th>
+         <th>Text</th>
+         <th></th>
+      </tr>
+   </thead>
+   <tbody>
+      @messages.map { message =>
+      <tr>
+         <td>@message.getId</td>
+         <td>
+            @message.text
+         </td>
+         <td>
+            <a class="btn btn-primary btn-xs" href="@routes.Messages.load(message.getId)">Update</a>
+            @helper.form(routes.Messages.delete(message.getId)) {
+                 <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
+             }
+         </td>
+      </tr>
+      }
+   </tbody>
+</table>
+
+}

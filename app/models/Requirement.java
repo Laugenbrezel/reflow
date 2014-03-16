@@ -1,86 +1,96 @@
 package models;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.hibernate.validator.constraints.Length;
+import org.ektorp.docref.DocumentReferences;
+import org.ektorp.docref.FetchType;
 import org.hibernate.validator.constraints.NotBlank;
-
-import com.google.common.hash.HashCode;
 
 import play.data.validation.Constraints.MaxLength;
 import play.data.validation.Constraints.Required;
-import play.db.ebean.*;
 
-@Entity
-public class Requirement extends Model {
+public class Requirement extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	public Long id;
 	@Required
 	public String title;
 	@NotBlank
 	@MaxLength(140)
 	public String text;
-	@ManyToOne(optional = false)
+
 	public User creator;
-	@ManyToMany(cascade = CascadeType.REMOVE)
-	public List<User> stakeholders = new ArrayList<User>();
-	@ManyToMany(cascade = CascadeType.REMOVE)
-	public List<User> likes = new ArrayList<User>();
+
+	public List<String> stakeholders = new ArrayList<String>();
+
+	public List<String> likes = new ArrayList<String>();
+
+	@DocumentReferences(backReference = "assignedToId", fetch = FetchType.LAZY)
+	public Set<Note> notes = new HashSet<Note>();
+
+	public Requirement() {
+	}
 
 	public Requirement(String title, String text, User owner) {
 		this.title = title;
 		this.text = text;
 		this.creator = owner;
-		this.stakeholders.add(owner);
+		this.stakeholders.add(owner.getId());
 	}
 
-	public static Model.Finder<Long, Requirement> find = new Model.Finder(
-			Long.class, Requirement.class);
-
-	public static Requirement create(String title, String text, User creator) {
-		Requirement requirement = new Requirement(title, text, creator);
-		return create(requirement);
+	public String getTitle() {
+		return title;
 	}
 
-	public static Requirement create(Requirement requirement) {
-		requirement.save();
-		requirement.saveManyToManyAssociations("stakeholders");
-		return requirement;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public static List<Requirement> findInvolving(String username) {
-		return find.where().eq("stakeholders.username", username).findList();
+	public String getText() {
+		return text;
 	}
 
-	public static List<Requirement> findInvolving(User user) {
-		return find.where().in("stakeholders", user).findList();
+	public void setText(String text) {
+		this.text = text;
 	}
 
-	public static List<Requirement> findCreatedBy(User user) {
-		return find.where().eq("creator", user).findList();
+	public User getCreator() {
+		return creator;
 	}
 
-	public static void like(Long id, User user) {
-		Requirement requirement = find.byId(id);
-		requirement.likes.add(user);
-		requirement.saveManyToManyAssociations("likes");
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 
-	public static void unlike(Long id, User user) {
-		Requirement requirement = find.byId(id);
-		requirement.likes.remove(user);
-		requirement.saveManyToManyAssociations("likes");
+	public List<String> getStakeholders() {
+		return stakeholders;
+	}
+
+	public void setStakeholders(List<String> stakeholders) {
+		this.stakeholders = stakeholders;
+	}
+
+	public List<String> getLikes() {
+		return likes;
+	}
+
+	public void setLikes(List<String> likes) {
+		this.likes = likes;
+	}
+
+	public Set<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
 	}
 
 	public boolean likedBy(User user) {
-		return likes.contains(user);
+		return likes.contains(user.getId());
 	}
 
 }

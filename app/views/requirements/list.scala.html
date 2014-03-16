@@ -18,28 +18,28 @@
    <tbody>
       @requirements.map { requirement =>
       <tr>
-         <td>@requirement.id</td>
+         <td>@requirement.getId</td>
          <td>
             @requirement.title
          </td>
-         <td>@requirement.creator.username</td>
+         <td>@requirement.creator</td>
          <td>@requirement.likes.size</td>
          <td>
-            @modal("requirementModal"+requirement.id,requirement.title,"Show") {
+            @modal("requirementModal"+requirement.getId,requirement.title,"Show") {
                <textarea class="form-control" rows="7" disabled="disabled">@requirement.text</textarea>
-               <small>by @requirement.creator.username</small>
+               <small>by @requirement.creator</small>
             }
-            <a class="btn btn-primary btn-xs" href="@routes.Requirements.load(requirement.id)">Update</a>
+            <a class="btn btn-primary btn-xs" href="@routes.Requirements.load(requirement.getId)">Update</a>
          </td>
          <td>
             @if(!requirement.likedBy(SideMenu.current().user)) {
-               @helper.form(routes.Requirements.like(requirement.id)) {
+               @helper.form(routes.Requirements.like(requirement.getId)) {
                     <button type="submit" class="btn btn-primary btn-xs">
                      <span class="glyphicon glyphicon-thumbs-up"></span> like
                     </button>
                 }
              } else {
-                @helper.form(routes.Requirements.unlike(requirement.id)) {
+                @helper.form(routes.Requirements.unlike(requirement.getId)) {
                     <button type="submit" class="btn btn-primary btn-xs">
                      <span class="glyphicon glyphicon-thumbs-down"></span> un-like
                     </button>
@@ -47,11 +47,11 @@
              }
          </td>
          <td>
-            @helper.form(routes.Requirements.delete(requirement.id)) {
+            @helper.form(routes.Requirements.delete(requirement.getId)) {
                  <input type="submit" value="Delete" class="btn btn-danger btn-xs"/>
              }
          <!--  
-            <a onclick="del('@routes.Requirements.delete(requirement.id)')">
+            <a onclick="del('@routes.Requirements.delete(requirement.getId)')">
             <span class="glyphicon glyphicon-trash"/></a>
          -->
          </td>

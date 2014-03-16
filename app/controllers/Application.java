@@ -44,10 +44,15 @@ public class Application extends Controller {
 		public String password;
 
 		public String validate() {
-			if (User.authenticate(username, password) == null) {
+			if (getRepository().authenticate(username, password) == null) {
 				return "Invalid user or password";
 			}
 			return null;
 		}
+	}
+
+	// FIXME this is crap
+	private static UserRepository getRepository() {
+		return new UserRepository(EktorpDb.getDb());
 	}
 }

@@ -1,21 +1,31 @@
 package models;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ektorp.docref.DocumentReferences;
+import org.ektorp.docref.FetchType;
+import org.ektorp.support.TypeDiscriminator;
 
-import play.db.ebean.Model;
-
-@Entity
-public class User extends Model {
+public class User extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
+	@TypeDiscriminator
 	public String username;
+
+	@DocumentReferences(backReference = "creatorId", fetch = FetchType.LAZY, descendingSortOrder = true, orderBy = "title")
+	public Set<Requirement> createdRequirements = new HashSet<Requirement>();
+
+	@DocumentReferences(backReference = "creatorId", fetch = FetchType.LAZY)
+	public Set<Message> messages = new HashSet<Message>();
+
 	// TODO Hash password
 	public String password;
+
+	public User() {
+	}
 
 	public User(String username) {
 		this.username = username;
@@ -26,12 +36,36 @@ public class User extends Model {
 		this.password = password;
 	}
 
-	public static Finder<String, User> find = new Finder<String, User>(
-			String.class, User.class);
+	public String getUsername() {
+		return username;
+	}
 
-	public static User authenticate(String username, String password) {
-		return find.where().eq("username", username).eq("password", password)
-				.findUnique();
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Requirement> getCreatedRequirements() {
+		return createdRequirements;
+	}
+
+	public void setCreatedRequirements(Set<Requirement> createdRequirements) {
+		this.createdRequirements = createdRequirements;
+	}
+
+	public Set<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(Set<Message> messages) {
+		this.messages = messages;
 	}
 
 	@Override
@@ -47,5 +81,10 @@ public class User extends Model {
 		User that = (User) obj;
 		System.out.println(this.username + " vs. " + that.username);
 		return StringUtils.equals(this.username, that.username);
+	}
+
+	@Override
+	public String toString() {
+		return this.username;
 	}
 }

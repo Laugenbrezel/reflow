@@ -1,11 +1,3 @@
-- !!models.User
-    username:   admin
-    password:   admin
-
-- !!models.User
-    username:   bisasam
-    password:   bisabisa
-
 - !!models.Requirement
     id:     -1
     title:  Bisa Bisa :)
