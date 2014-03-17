@@ -1,4 +1,4 @@
-@(title: String, menu: String)(content: Html)
+@(title: String, menu: String, post_scripts: Html = Html(""))(content: Html)
 
 <!DOCTYPE html>
 <html>
@@ -94,5 +94,6 @@
          </div>
       </div>
       
+      @post_scripts
 </body>
 </html>

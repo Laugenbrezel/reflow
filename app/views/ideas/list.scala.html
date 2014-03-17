@@ -1,6 +1,12 @@
 @(ideaForm: Form[Idea], ideas: java.util.List[Idea]) 
 
-@main("Ideas","ideas") {      
+@post_scripts = {
+<script type="text/javascript">
+   $( "#text" ).focus();
+</script>
+}
+
+@main("Ideas","ideas",post_scripts) {      
 
    <div class="well">
       @helper.form(routes.Ideas.add(), 'role -> "form", 'class -> "form-inline") {
