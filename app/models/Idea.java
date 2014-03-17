@@ -3,8 +3,11 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.ektorp.support.TypeDiscriminator;
+
 import play.data.validation.Constraints.Required;
 
+@TypeDiscriminator("doc.type == 'Idea'")
 public class Idea extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;

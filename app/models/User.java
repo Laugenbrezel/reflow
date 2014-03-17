@@ -8,11 +8,11 @@ import org.ektorp.docref.DocumentReferences;
 import org.ektorp.docref.FetchType;
 import org.ektorp.support.TypeDiscriminator;
 
+@TypeDiscriminator("doc.type == 'User'")
 public class User extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;
 
-	@TypeDiscriminator
 	public String username;
 
 	@DocumentReferences(backReference = "creatorId", fetch = FetchType.LAZY, descendingSortOrder = true, orderBy = "title")

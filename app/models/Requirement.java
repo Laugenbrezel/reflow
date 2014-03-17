@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.ektorp.docref.DocumentReferences;
 import org.ektorp.docref.FetchType;
+import org.ektorp.support.TypeDiscriminator;
 import org.hibernate.validator.constraints.NotBlank;
 
 import play.data.validation.Constraints.MaxLength;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import controllers.EktorpDb;
 import controllers.UserRepository;
 
+@TypeDiscriminator("doc.type == 'Requirement'")
 public class Requirement extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;

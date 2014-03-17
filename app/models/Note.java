@@ -2,8 +2,9 @@ package models;
 
 import java.util.Date;
 
-import org.ektorp.support.CouchDbDocument;
+import org.ektorp.support.TypeDiscriminator;
 
+@TypeDiscriminator("doc.type == 'Note'")
 public class Note extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;

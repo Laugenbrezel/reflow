@@ -1,7 +1,10 @@
 package models;
 
+import org.ektorp.support.TypeDiscriminator;
+
 import play.data.validation.Constraints.Required;
 
+@TypeDiscriminator("doc.type == 'Message'")
 public class Message extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;
