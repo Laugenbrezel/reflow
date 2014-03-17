@@ -7,6 +7,7 @@ import models.Requirement;
 import models.User;
 
 import org.ektorp.CouchDbConnector;
+import org.ektorp.ViewResult;
 import org.ektorp.support.CouchDbRepositorySupport;
 import org.ektorp.support.GenerateView;
 import org.ektorp.support.View;
@@ -33,6 +34,13 @@ public class RequirementRepository extends
 	@GenerateView
 	public List<Requirement> findByCreatorId(String creatorId) {
 		return queryView("by_creatorId", creatorId);
+	}
+
+	@View(name = "count_by_creatorId", map = "function(doc) { if(doc.type == 'Requirement' && doc.creatorId) {emit(doc.creatorId, 1)} }", reduce = "function(keys, values, rereduce) {return sum(values)}")
+	public int countByCreatorId(String creatorId) {
+		ViewResult r = db.queryView(createQuery("count_by_creatorId").key(
+				creatorId));
+		return r.getRows().get(0).getValueAsInt();
 	}
 
 	public void like(String id, String userId) {

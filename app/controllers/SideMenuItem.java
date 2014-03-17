@@ -14,8 +14,8 @@ public class SideMenuItem implements Serializable {
 	public SideMenuItem(User user) {
 		this.user = user;
 		// TODO implement
-		this.countMyRequirements = getRequirementRepository().findByCreatorId(
-				user.getId()).size();
+		this.countMyRequirements = getRequirementRepository().countByCreatorId(
+				user.getId());
 	}
 
 	private static RequirementRepository getRequirementRepository() {
