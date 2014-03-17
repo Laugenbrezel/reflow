@@ -12,9 +12,17 @@ import org.hibernate.validator.constraints.NotBlank;
 import play.data.validation.Constraints.MaxLength;
 import play.data.validation.Constraints.Required;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import controllers.EktorpDb;
+import controllers.UserRepository;
+
 public class Requirement extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final UserRepository USER_REPO = new UserRepository(
+			EktorpDb.getDb());
 
 	@Required
 	public String title;
@@ -22,7 +30,7 @@ public class Requirement extends DocumentEntity {
 	@MaxLength(140)
 	public String text;
 
-	public User creator;
+	public String creatorId;
 
 	public List<String> stakeholders = new ArrayList<String>();
 
@@ -34,11 +42,11 @@ public class Requirement extends DocumentEntity {
 	public Requirement() {
 	}
 
-	public Requirement(String title, String text, User owner) {
+	public Requirement(String title, String text, String creatorId) {
 		this.title = title;
 		this.text = text;
-		this.creator = owner;
-		this.stakeholders.add(owner.getId());
+		this.creatorId = creatorId;
+		this.stakeholders.add(creatorId);
 	}
 
 	public String getTitle() {
@@ -57,12 +65,18 @@ public class Requirement extends DocumentEntity {
 		this.text = text;
 	}
 
-	public User getCreator() {
-		return creator;
+	public String getCreatorId() {
+		return creatorId;
 	}
 
-	public void setCreator(User creator) {
-		this.creator = creator;
+	public void setCreator(String creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	@JsonIgnore
+	public User getCreator() {
+		// TODO how best to do this?
+		return USER_REPO.get(this.creatorId);
 	}
 
 	public List<String> getStakeholders() {
@@ -89,8 +103,8 @@ public class Requirement extends DocumentEntity {
 		this.notes = notes;
 	}
 
-	public boolean likedBy(User user) {
-		return likes.contains(user.getId());
+	public boolean likedBy(String userId) {
+		return likes.contains(userId);
 	}
 
 }

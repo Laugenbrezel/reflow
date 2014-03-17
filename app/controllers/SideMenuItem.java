@@ -2,7 +2,6 @@ package controllers;
 
 import java.io.Serializable;
 
-import models.Requirement;
 import models.User;
 
 public class SideMenuItem implements Serializable {
@@ -15,8 +14,8 @@ public class SideMenuItem implements Serializable {
 	public SideMenuItem(User user) {
 		this.user = user;
 		// TODO implement
-		this.countMyRequirements = getRequirementRepository().findByCreator(
-				user).size();
+		this.countMyRequirements = getRequirementRepository().findByCreatorId(
+				user.getId()).size();
 	}
 
 	private static RequirementRepository getRequirementRepository() {

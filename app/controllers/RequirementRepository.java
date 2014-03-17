@@ -32,8 +32,8 @@ public class RequirementRepository extends
 	}
 
 	@GenerateView
-	public List<Requirement> findByCreator(User user) {
-		return queryView("by_creator", user.username);
+	public List<Requirement> findByCreatorId(String creatorId) {
+		return queryView("by_creatorId", creatorId);
 	}
 
 	public void like(String id, String userId) {

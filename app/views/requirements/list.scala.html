@@ -22,17 +22,17 @@
          <td>
             @requirement.title
          </td>
-         <td>@requirement.creator</td>
+         <td>@requirement.getCreator</td>
          <td>@requirement.likes.size</td>
          <td>
             @modal("requirementModal"+requirement.getId,requirement.title,"Show") {
                <textarea class="form-control" rows="7" disabled="disabled">@requirement.text</textarea>
-               <small>by @requirement.creator</small>
+               <small>by @requirement.getCreator</small>
             }
             <a class="btn btn-primary btn-xs" href="@routes.Requirements.load(requirement.getId)">Update</a>
          </td>
          <td>
-            @if(!requirement.likedBy(SideMenu.current().user)) {
+            @if(!requirement.likedBy(SideMenu.current().user.getId)) {
                @helper.form(routes.Requirements.like(requirement.getId)) {
                     <button type="submit" class="btn btn-primary btn-xs">
                      <span class="glyphicon glyphicon-thumbs-up"></span> like

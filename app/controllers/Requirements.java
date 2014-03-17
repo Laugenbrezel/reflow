@@ -42,7 +42,7 @@ public class Requirements extends BaseController {
 			return badRequest(create.render(requirementForm));
 		} else {
 			Requirement requirement = requirementForm.get();
-			requirement.creator = getUser();
+			requirement.creatorId = getUserId();
 			// FIXME crap this is
 			REPO.add(requirement);
 			flash("success", "New Requirement created :)");
@@ -57,7 +57,7 @@ public class Requirements extends BaseController {
 			return badRequest(update.render(requirementForm));
 		}
 		Requirement requirement = requirementForm.get();
-		requirement.creator = getUser();
+		requirement.creatorId = getUserId();
 		REPO.update(requirement);
 		flash("success", "Requirement " + requirementForm.get().getId()
 				+ " has been updated");
@@ -83,7 +83,7 @@ public class Requirements extends BaseController {
 
 	public static Result unlike(String id) {
 		REPO.unlike(id, getUserId());
-		flash("info", "Seems you do not that anymore!");
+		flash("info", "Seems you do not like that anymore!");
 		return GO_HOME;
 	}
 
