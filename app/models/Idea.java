@@ -19,7 +19,7 @@ public class Idea extends DocumentEntity {
 
 	public IdeaStatus status;
 
-	public List<String> likes = new ArrayList<String>();
+	public List<String> likes = new ArrayList<>();
 
 	public String getText() {
 		return text;

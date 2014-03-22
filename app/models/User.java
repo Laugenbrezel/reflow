@@ -16,10 +16,10 @@ public class User extends DocumentEntity {
 	public String username;
 
 	@DocumentReferences(backReference = "creatorId", fetch = FetchType.LAZY, descendingSortOrder = true, orderBy = "title")
-	public Set<Requirement> createdRequirements = new HashSet<Requirement>();
+	public Set<Requirement> createdRequirements = new HashSet<>();
 
 	@DocumentReferences(backReference = "creatorId", fetch = FetchType.LAZY)
-	public Set<Message> messages = new HashSet<Message>();
+	public Set<Message> messages = new HashSet<>();
 
 	// TODO Hash password
 	public String password;

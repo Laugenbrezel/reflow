@@ -4,13 +4,16 @@ import java.util.Date;
 
 import org.ektorp.support.TypeDiscriminator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @TypeDiscriminator("doc.type == 'Note'")
 public class Note extends DocumentEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	public String text;
-	public Date createDate;
+
+	public Date dateCreated = new Date();
 
 	public String assignedToId;
 
@@ -24,12 +27,14 @@ public class Note extends DocumentEntity {
 		this.text = text;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	@JsonProperty("date_created")
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	@JsonProperty("date_created")
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
 	public String getAssignedToId() {

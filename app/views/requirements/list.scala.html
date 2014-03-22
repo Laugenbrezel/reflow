@@ -28,6 +28,26 @@
             @modal("requirementModal"+requirement.getId,requirement.title,"Show") {
                <textarea class="form-control" rows="7" disabled="disabled">@requirement.text</textarea>
                <small>by @requirement.getCreator</small>
+               
+               @helper.form(routes.Requirements.addComment(requirement.getId), 'role -> "form", 'class -> "form-inline") {
+                  <div class="input-group">                     
+                     <input type="text" class="form-control" id="text" name="text" placeholder="Comment goes here..."/>
+                     <span class="input-group-btn">                     
+                        <button type="submit" class="btn btn-primary">Add</button>
+                     </span>
+                  </div>                
+               }
+               <br/>
+               @requirement.notes.map { note =>
+                  <div class="panel panel-primary">
+                    <div class="panel-heading">
+                      <h6 class="panel-title">@note.getId <em>by someone</em></h6>          
+                    </div>
+                    <div class="panel-body">
+                      @note.text
+                    </div>
+                  </div>
+               }
             }
             <a class="btn btn-primary btn-xs" href="@routes.Requirements.load(requirement.getId)">Update</a>
          </td>

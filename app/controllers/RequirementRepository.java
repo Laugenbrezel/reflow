@@ -40,7 +40,7 @@ public class RequirementRepository extends
 	public int countByCreatorId(String creatorId) {
 		ViewResult r = db.queryView(createQuery("count_by_creatorId").key(
 				creatorId));
-		return r.getRows().get(0).getValueAsInt();
+		return (r.isEmpty() ? 0 : r.getRows().get(0).getValueAsInt());
 	}
 
 	public void like(String id, String userId) {

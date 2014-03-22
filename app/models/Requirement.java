@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.ektorp.docref.CascadeType;
 import org.ektorp.docref.DocumentReferences;
 import org.ektorp.docref.FetchType;
 import org.ektorp.support.TypeDiscriminator;
@@ -34,12 +35,12 @@ public class Requirement extends DocumentEntity {
 
 	public String creatorId;
 
-	public List<String> stakeholders = new ArrayList<String>();
+	public List<String> stakeholders = new ArrayList<>();
 
-	public List<String> likes = new ArrayList<String>();
+	public List<String> likes = new ArrayList<>();
 
-	@DocumentReferences(backReference = "assignedToId", fetch = FetchType.LAZY)
-	public Set<Note> notes = new HashSet<Note>();
+	@DocumentReferences(backReference = "requirementId", fetch = FetchType.LAZY, cascade = CascadeType.ALL, descendingSortOrder = true, orderBy = "dateCreated")
+	public Set<Note> notes = new HashSet<>();
 
 	public Requirement() {
 	}

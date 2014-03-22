@@ -1,6 +1,7 @@
 package controllers;
 
 import static play.data.Form.form;
+import models.Note;
 import models.Requirement;
 import play.data.Form;
 import play.mvc.Result;
@@ -61,6 +62,22 @@ public class Requirements extends BaseController {
 		REPO.update(requirement);
 		flash("success", "Requirement " + requirementForm.get().getId()
 				+ " has been updated");
+		return GO_HOME;
+	}
+
+	public static Result addComment(String id) {
+		final Requirement requirement = REPO.get(id);
+		if (requirement == null) {
+			return notFound(String
+					.format("Requirement %s does not exists.", id));
+		}
+		Note note = new Note();
+		note.setAssignedToId(getUserId());
+		note.setRequirementId(id);
+		note.setText(form().bindFromRequest().get("text"));
+		requirement.getNotes().add(note);
+		REPO.update(requirement);
+		flash("info", "Comment added, usuability horrible ;)");
 		return GO_HOME;
 	}
 
